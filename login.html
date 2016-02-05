@@ -1,0 +1,12 @@
+<div class="contenedor-vista">
+	<p class="texto-login">
+		RESPONDÉ LAS PREGUNTAS <br> Y COMENZÁ A PARTICIPAR <span>POR DELICIOSOS PREMIOS</span><br> EXCLUSIVOS PARA LOS DOS!
+	</p>
+	<form action="" name="form-login" class="formulario-login" >
+
+		<input type="text" name="nombre" placeholder="NOMBRE Y APELLIDO" ng-model="vm.nombre">
+		<input type="email" name="email" placeholder="E-MAIL" ng-model="vm.email">
+		<input type="text" name="fecha" placeholder="FECHA DE NACIMIENTO" ng-model="vm.fecha" onfocus="(this.type='date')">
+	</form>
+	<img src="img/btn-jugar.png" alt="" id="btnJugar" ng-click="vm.login()">
+</div>

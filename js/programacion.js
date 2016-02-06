@@ -38,6 +38,7 @@ angular
 
 
 		vm.login = function(){
+			loading()
 			$http.post("controladores/login.php", {
 				nombre: vm.nombre,
 				email: vm.email,
@@ -48,12 +49,29 @@ angular
 					usuario.nombre = r.data[0].nombre
 					usuario.email = r.data[0].email
 					usuario.fecha = r.data[0].fecha
-					alert("Puedes responder las preguntas "+usuario.nombre)
+					notificarModal('Puede responder las preguntas :D')
 				}else{
-					alert("No puedes participar nuevamente.")
+					notificarModal('Lo sentímos, no puede participar mas de una vez.')
 				}
 			}, function(r){
 				console.log("error"+r.error)
 			})
 		}
+
+		vm.loadingOff = function(){
+			$('.fondo-negro').fadeOut(600)
+			$('.cargando').fadeOut(300)
+			$('#modal').fadeOut(600)
+		}
 	}
+
+	function notificarModal(mensaje){
+		var modal = document.getElementById('mensajeModal')
+		modal.innerHTML = mensaje;
+		$('#modal').fadeIn(300)
+	}
+	function loading(){
+		$('.fondo-negro').fadeIn(600)
+		$('.cargando').fadeIn(400)
+	}
+	

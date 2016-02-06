@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="es" ng-app="concursoz">
+<html lang="es" ng-app="concursoz" ng-controller="controlador as vm">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="css/estilo.css">
 	<link rel="shortcut icon" href="img/favicon.ico"/>
 	<script src="js/angular.min.js"></script>
@@ -22,6 +23,10 @@
 </header>
 
 <ng-view></ng-view>
+
+<div class="cargando"><i class="fa fa-spinner fa-spin"></i></div>
+<div class="fondo-negro"></div>
+<div class="notificacion-modal container" id="modal"><span class="glyphicon glyphicon-remove" ng-click="vm.loadingOff()"></span><p id="mensajeModal"></p></div>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/programacion.js"></script>
 

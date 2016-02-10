@@ -31,11 +31,11 @@ angular
 		return persona;
 	})
 
-	.controller('controlador', ['$http', 'usuario', concursozCtrl])
+	.controller('controlador', ['$http', 'usuario', '$location', concursozCtrl])
 
-	function concursozCtrl($http, usuario){
+	function concursozCtrl($http, usuario, $location){
 		var vm = this;
-
+		verificarLogin()
 
 		vm.login = function(){
 			loading()
@@ -49,19 +49,27 @@ angular
 					usuario.nombre = r.data[0].nombre
 					usuario.email = r.data[0].email
 					usuario.fecha = r.data[0].fecha
-					notificarModal('Puede responder las preguntas :D')
+					$location.path('/preguntas')
 				}else{
 					notificarModal('Lo sentímos, no puede participar mas de una vez.')
 				}
 			}, function(r){
 				console.log("error"+r.error)
 			})
+			vm.loadingOff()
+			
 		}
 
 		vm.loadingOff = function(){
 			$('.fondo-negro').fadeOut(600)
 			$('.cargando').fadeOut(300)
 			$('#modal').fadeOut(600)
+		}
+
+		function verificarLogin(){
+			if (usuario.nombre == "" && usuario.email == "" && usuario.fecha == ""){
+				$location.path('/')
+			}
 		}
 	}
 

@@ -72,7 +72,7 @@ angular
 
 	function concursozCtrl($http, usuario, fPreguntas, $location){
 		var vm = this;
-		//verificarLogin()
+		verificarLogin()
 		vm.login = function(){
 			loading()
 			$http.post("controladores/login.php", {
@@ -126,6 +126,7 @@ angular
 			}
 
 			i = 0
+			j = 0
 
 			loop1:
 			while (i < vm.vector.length){
@@ -140,13 +141,15 @@ angular
 				i= i+1
 			}
 
+			if (fPreguntas.length == 0){
+				$location.path('/ganador')
+			}
+
 			if (vm.vector[i] == fPreguntas[j].ide){
 				vm.preguntas = fPreguntas[j]
 			}
 
-			if (fPreguntas.length < 0){
-				$location.path('/ganador')
-			}
+			
 			fPreguntas.splice(j,1)
 			vm.vector.splice(i,1)
 		}

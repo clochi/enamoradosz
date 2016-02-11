@@ -17,8 +17,9 @@
  <!--[if lt IE 8]>
     <p class="browserupgrade">Estas usando un navegador <strong>viejo</strong>. Por favor <a href="http://browsehappy.com/">actualíce su navegador</a> para una mejór experiencia.</p>
 <![endif]-->
-<audio src="sonido/correcto.mp3" id="correcto"></audio>
-<audio src="sonido/incorrecto.mp3" id="incorrecto"></audio>
+<audio src="sonido/correcto.mp3" id="correcto" preload="auto"></audio>
+<audio src="sonido/incorrecto.mp3" id="incorrecto" preload="auto"></audio>
+<audio src="sonido/aplausos.mp3" id="aplausos" preload="auto"></audio>
 <header class="header-grande" ng-class="{'header-chico' : vm.getRoute() != '/'}">
 	<img src="img/header-logo.png" alt="" class="header-logo">
 	<img src="img/header-logo-zeta.png" alt="" class="header-logo-zeta">

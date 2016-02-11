@@ -1,3 +1,9 @@
+var correcto = document.getElementById('correcto')
+var incorrecto = document.getElementById('incorrecto')
+var aplausos = document.getElementById('aplausos')
+correcto.preload = 'auto';
+incorrecto.preload = 'auto';
+aplausos.preload = 'auto'
 angular
 	.module('concursoz', ['ngRoute'])
 	.config(function($routeProvider){
@@ -65,8 +71,7 @@ angular
 	function concursozCtrl($http, usuario, fPreguntas, $location){
 		var vm = this;
 		verificarLogin()
-		var correcto = document.getElementById('correcto')
-		var incorrecto = document.getElementById('incorrecto')
+		
 		vm.login = function(){
 			if (vm.nombre != undefined || vm.email != undefined || vm.fecha != undefined){
 				if (vm.nombre != "" && vm.email != "" && vm.fecha != undefined){
@@ -167,20 +172,25 @@ angular
 						str: "bien",
 						first: true
 					}
-					$event.currentTarget.classList.add('correcto')
-					$event.currentTarget.firstElementChild.classList.add('img-res-activo')
-					correcto.play()
 					if (fPreguntas.length == 0){
 						$location.path('/ganador')
+						aplausos.play()
+					}else{
+						correcto.play()
+						$event.currentTarget.classList.add('correcto')
+						$event.currentTarget.firstElementChild.classList.add('img-res-activo')
 					}
+					
+					
 				}else{
 					vm.clase = {
 						str: "mal",
 						second: true
 					}
+					incorrecto.play()
 					$event.currentTarget.classList.add('incorrecto')
 					$event.currentTarget.firstElementChild.classList.add('img-res-activo')
-					incorrecto.play()
+					
 				}
 				vm.cont = vm.cont + 1
 			}

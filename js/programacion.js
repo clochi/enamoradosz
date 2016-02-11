@@ -58,15 +58,7 @@ angular
 		]
 		return preguntas;
 	})
-	/*.factory("pregunta", function(){
-		var pregunta = {
-			ide: "",
-			pregunta: "",
-			opciones: "",
-			respuesta: "",
-		}
-		return pregunta;
-	})*/
+
 
 	.controller('controlador', ['$http', 'usuario', 'fPreguntas', '$location', concursozCtrl])
 
@@ -86,14 +78,14 @@ angular
 					usuario.email = r.data[0].email
 					usuario.fecha = r.data[0].fecha
 					$location.path('/preguntas')
-					
+					vm.loadingOff()
 				}else{
 					notificarModal('Lo sentímos, no puede participar mas de una vez.')
 				}
 			}, function(r){
 				console.log("error"+r.error)
 			})
-			vm.loadingOff()
+			
 			
 		}
 
@@ -152,6 +144,19 @@ angular
 			
 			fPreguntas.splice(j,1)
 			vm.vector.splice(i,1)
+		}
+
+		vm.escoge = function($index, $event){
+			if (vm.preguntas.opciones[$index] == vm.preguntas.respuesta){
+				vm.clase = "gana"
+				$event.currentTarget.innerHTML = "Ganaste!"
+				var oso = $event
+				return true;
+			}else{
+				vm.clase = "pierde"
+				$event.currentTarget.innerHTML = "Perdiste!"
+				return false;
+			}
 		}
 
 		function verificarLogin(){

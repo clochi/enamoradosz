@@ -6,7 +6,7 @@
 
 	<div class="respuestas">
 		<ul>
-			<li class="respuesta" ng-repeat="opcion in vm.preguntas.opciones">{{opcion}}</li>
+			<li class="respuesta" ng-repeat="opcion in vm.preguntas.opciones" ng-click="vm.escoge($index, $event)">{{opcion}}</li>
 		</ul>
 	</div>
 

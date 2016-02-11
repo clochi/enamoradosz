@@ -238,12 +238,69 @@ body{
     border-top: 2px solid white;
     border-bottom: 2px solid white;
     padding: 30px 0px;
+    margin-bottom: 20px;
 }
 .pregunta-texto{
     margin: 0px;
     font-family: 'brandon_grotesque_regularRg';
     color: #FFFFFF;
     font-size: 1.5em;
+}
+.respuestas ul{
+    padding: 0px;
+}
+.respuesta{
+    list-style: none;
+    padding: 10px;
+    background-color: black;
+    color: white;
+    font-family: 'brandon_grotesqueblack';
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    box-shadow: 2px 2px 5px black;
+    position: relative;
+}
+.correcto{
+    background-color: #00C605;
+    box-shadow: none;
+}
+.incorrecto{
+    background-color: #FF0000;
+    box-shadow: none;
+}
+.img-res{
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translate(0, -50%);
+    display: none;
+}
+.img-res-activo{
+    display: block;
+}
+.premios{
+    list-style: none;
+    padding: 10px;
+    background-color: #EA482D;
+    color: white;
+    font-family: 'brandon_grotesqueblack';
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    position: relative;
+}
+.perdiste{
+    position: relative;
+    max-width: 200px;
+    margin: 0 auto;
+}
+.ganaste{
+    position: relative;
+    margin: 0 auto;
+}
+#resultado{
+    margin-top: 20px;
 }
 
 /*-------------PREGUNTAS INICIO-------------*/

@@ -46,14 +46,14 @@ angular
 		{
 			ide: 2,
 			pregunta: '¿Quién dijo la frase:  “El amor jamás reclama; da siempre. El amor tolera, jamás se irrita, nunca se venga”?',
-			opciones: ['William Shakespeare', 'Paulo Coelho', 'Dalai Lama'],
-			respuesta: 'Dalai Lama'
+			opciones: ['William Shakespeare', 'Paulo Coelho', 'Indira Gandhi'],
+			respuesta: 'Indira Gandhi'
 		},
 		{
 			ide: 3,
 			pregunta: '¿Quién fue SAN VALENTÍN?',
-			opciones: ['San Valentín era un sacerdote que, hacia el siglo III, celebraba en secreto matrimonios para jóvenes enamorados.', 'Acción de marketing de la cadena de centros comerciales WESHOP de Massachusetts, creada en 1965', 'Hermano de San Antonio, santo del amor imposible y difícil.'],
-			respuesta: 'Dalai Lama'
+			opciones: ['Un sacerdote que celebraba en secreto matrimonios para jóvenes enamorados', 'Acción de marketing de la cadena de centros comerciales WESHOP de Massachusetts (1965)', 'Hermano de San Antonio, santo del amor imposible y difícil'],
+			respuesta: 'Un sacerdote que celebraba en secreto matrimonios para jóvenes enamorados'
 		}
 		]
 		return preguntas;
@@ -65,28 +65,37 @@ angular
 	function concursozCtrl($http, usuario, fPreguntas, $location){
 		var vm = this;
 		verificarLogin()
+		var correcto = document.getElementById('correcto')
+		var incorrecto = document.getElementById('incorrecto')
 		vm.login = function(){
-			loading()
-			$http.post("controladores/login.php", {
-				nombre: vm.nombre,
-				email: vm.email,
-				fecha: vm.fecha
-			})
-			.then(function(r){
-				if (r.data){
-					usuario.nombre = r.data[0].nombre
-					usuario.email = r.data[0].email
-					usuario.fecha = r.data[0].fecha
-					$location.path('/preguntas')
-					vm.loadingOff()
+			if (vm.nombre != undefined || vm.email != undefined || vm.fecha != undefined){
+				if (vm.nombre != "" && vm.email != "" && vm.fecha != undefined){
+					loading()
+				$http.post("controladores/login.php", {
+					nombre: vm.nombre,
+					email: vm.email,
+					fecha: vm.fecha
+				})
+				.then(function(r){
+					if (r.data){
+						usuario.nombre = r.data[0].nombre
+						usuario.email = r.data[0].email
+						usuario.fecha = r.data[0].fecha
+						$location.path('/preguntas')
+						vm.loadingOff()
+					}else{
+						notificarModal('Lo sentímos, no puede participar mas de una vez.')
+					}
+				}, function(r){
+					console.log("error"+r.error)
+				})
 				}else{
-					notificarModal('Lo sentímos, no puede participar mas de una vez.')
+					notificarModal("Debe completar todos los campos.")
 				}
-			}, function(r){
-				console.log("error"+r.error)
-			})
-			
-			
+			}
+			else{
+				notificarModal("Debe completar todos los campos.")
+			}
 		}
 
 
@@ -99,8 +108,11 @@ angular
 			return $location.path()
 		}
 		vm.siguiente = function(){
+			correcto.load()
+			incorrecto.load()
+			if (fPreguntas.length != 0){
 
-			if (vm.vector == undefined){
+				if (vm.vector == undefined){
 				var i = 0;
 				var vec = []
 				for (var i = 0; i < 4; i++){
@@ -144,19 +156,35 @@ angular
 			
 			fPreguntas.splice(j,1)
 			vm.vector.splice(i,1)
+			}
+			vm.clase = false;
 		}
 
-		vm.escoge = function($index, $event){
-			if (vm.preguntas.opciones[$index] == vm.preguntas.respuesta){
-				vm.clase = "gana"
-				$event.currentTarget.innerHTML = "Ganaste!"
-				var oso = $event
-				return true;
-			}else{
-				vm.clase = "pierde"
-				$event.currentTarget.innerHTML = "Perdiste!"
-				return false;
+		vm.escoge = function($index, $event, cont){
+			if (cont == 0){
+				if (vm.preguntas.opciones[$index] == vm.preguntas.respuesta){
+					vm.clase = {
+						str: "bien",
+						first: true
+					}
+					$event.currentTarget.classList.add('correcto')
+					$event.currentTarget.firstElementChild.classList.add('img-res-activo')
+					correcto.play()
+					if (fPreguntas.length == 0){
+						$location.path('/ganador')
+					}
+				}else{
+					vm.clase = {
+						str: "mal",
+						second: true
+					}
+					$event.currentTarget.classList.add('incorrecto')
+					$event.currentTarget.firstElementChild.classList.add('img-res-activo')
+					incorrecto.play()
+				}
+				vm.cont = vm.cont + 1
 			}
+
 		}
 
 		function verificarLogin(){
@@ -167,6 +195,7 @@ angular
 	}
 
 	function notificarModal(mensaje){
+		$('.fondo-negro').fadeIn(600)
 		var modal = document.getElementById('mensajeModal')
 		modal.innerHTML = mensaje;
 		$('#modal').fadeIn(300)

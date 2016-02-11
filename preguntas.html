@@ -4,14 +4,15 @@
 		<p class="pregunta-texto contenedor-vista">{{vm.preguntas.pregunta}}</p>
 	</div>
 
-	<div class="respuestas">
+	<div class="respuestas contenedor-vista">
 		<ul>
-			<li class="respuesta" ng-repeat="opcion in vm.preguntas.opciones" ng-click="vm.escoge($index, $event)">{{opcion}}</li>
+			<li class="respuesta" ng-init="vm.cont = 0" ng-repeat="opcion in vm.preguntas.opciones" ng-click="vm.escoge($index, $event, vm.cont)">{{opcion}} <img ng-show="vm.clase != ''" ng-src="img/{{vm.clase.str}}.png" alt="" class="img-res"></li>
 		</ul>
 	</div>
 
-	<div class="resultado" ng-click="vm.siguiente()">
-		Siguiente
+	<div id="resultado">
+		<img src="img/btn-siguiente.png" alt="" ng-show="vm.clase.first" ng-click="vm.siguiente()">
+		<img src="img/perdiste.png" class="perdiste img-responsive" alt="" ng-show="vm.clase.second">
 	</div>
 
 </div>
